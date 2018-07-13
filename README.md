@@ -1,6 +1,8 @@
 # Meal-Tracker
 An open-source meal tracker made in [Wolfram Language](https://www.wolfram.com/language/) and hosted in the [Wolfram Cloud](http://www.wolfram.com/cloud/).
 
+![Home page](/Screenshots/HomePage.png?raw=true "Home page")
+
 ## Features
 * Easy Food entry via natural language, codes (UPCs, PLUs, USDA NDB numbers), and barcode images
 * Custom food and meal logging and editing
