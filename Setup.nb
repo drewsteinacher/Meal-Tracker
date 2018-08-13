@@ -1,0 +1,928 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     37593,        920]
+NotebookOptionsPosition[     33690,        844]
+NotebookOutlinePosition[     34030,        859]
+CellTagsIndexPosition[     33987,        856]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Meal Tracker Setup", "Title",
+ CellChangeTimes->{{3.7431662645711565`*^9, 
+  3.743166268694156*^9}},ExpressionUUID->"1137940b-d09b-4149-9ced-\
+3c90b363bf3d"],
+
+Cell["\<\
+This notebook can be used to deploy a new meal tracker instance for the first \
+time, using the included default data.
+This is the fastest and easiest way to get a meal tracker up and running.\
+\>", "Text",
+ CellChangeTimes->{{3.743166357779156*^9, 
+  3.743166424749872*^9}},ExpressionUUID->"73399ff3-4ea8-4452-8917-\
+a348b633421e"],
+
+Cell[CellGroupData[{
+
+Cell["Load the Meal Tracker Package", "Section",
+ CellChangeTimes->{{3.7183809978854685`*^9, 3.7183810000539103`*^9}, {
+  3.743164797047472*^9, 
+  3.7431648009598637`*^9}},ExpressionUUID->"e6106bc6-0776-483b-84eb-\
+d1c27a87309d"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Get", "[", "\"\<MealTrackerApp.wl\>\"", "]"}]}], "Input",
+ CellChangeTimes->{{3.718379889408749*^9, 3.718379914772314*^9}, {
+  3.7183811157308855`*^9, 3.718381117774499*^9}},
+ CellLabel->"In[35]:=",ExpressionUUID->"76059c1c-d18c-4223-96b8-3c8183441864"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Set Meal Tracker Cloud Path", "Section",
+ CellChangeTimes->{{3.743164282046728*^9, 
+  3.7431642888347282`*^9}},ExpressionUUID->"cd666b1a-76a9-4ef8-949f-\
+636ba7add652"],
+
+Cell["\<\
+This will be the directory where your meal tracker is deployed in the Wolfram \
+Cloud.
+Using a relative path, like this one, will be inside your user\
+\[CloseCurlyQuote]s \[OpenCurlyDoubleQuote]home\[CloseCurlyDoubleQuote] cloud \
+directory.\
+\>", "Text",
+ CellChangeTimes->{{3.743164323008728*^9, 3.743164425922006*^9}, {
+  3.7431650196417294`*^9, 
+  3.7431650216849337`*^9}},ExpressionUUID->"5a5c8856-226a-4d59-a30e-\
+e49cd9405605"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"$MealTrackerCloudObject", "=", 
+  RowBox[{"CloudObject", "[", "\"\<MealTracker/Andrew\>\"", "]"}]}]], "Input",
+ CellChangeTimes->{{3.743164291374728*^9, 3.743164318798728*^9}, 
+   3.7431643963180866`*^9},
+ CellLabel->"In[19]:=",ExpressionUUID->"f9661fc4-df56-4cdc-a3ec-7f519cb09fb2"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"CloudObject", "[", 
+   TemplateBox[{
+    "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew\"",
+     "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew"},
+    "HyperlinkURL"], "]"}],
+  CloudObject[
+  "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew"],
+  SelectWithContents->True]], "Output",
+ CellChangeTimes->{3.743164320873728*^9, 3.74316442834149*^9},
+ CellLabel->"Out[19]=",ExpressionUUID->"2f807673-0f52-4b1a-b891-ed4576e8147a"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["First time deployment", "Section",
+ CellChangeTimes->{{3.7431644812260647`*^9, 3.743164484005621*^9}, {
+  3.7431645188475876`*^9, 3.743164520030824*^9}, {3.7431645589756117`*^9, 
+  3.7431645738235807`*^9}},ExpressionUUID->"73775202-7353-4e13-8996-\
+1c57c8cacf73"],
+
+Cell["\<\
+This will use the default data supplied with the git repo, if you don\
+\[CloseCurlyQuote]t change anything in the \[OpenCurlyDoubleQuote]Default\
+\[CloseCurlyDoubleQuote] directory.\
+\>", "Text",
+ CellChangeTimes->{{3.743164578109438*^9, 3.74316459657613*^9}, {
+  3.743164639249694*^9, 
+  3.743164680445813*^9}},ExpressionUUID->"3cb843b4-dcef-40c3-8f00-\
+3244a17277dd"],
+
+Cell[CellGroupData[{
+
+Cell["Create or choose a history Databin", "Subsection",
+ CellChangeTimes->{{3.7431645992616673`*^9, 
+  3.7431646128003745`*^9}},ExpressionUUID->"ce813c7f-3bb7-46c9-b8b2-\
+c634bd6bbca5"],
+
+Cell["\<\
+The meal tracker requires a Databin to store history information.
+You can create a new one with the following code:\
+\>", "Text",
+ CellChangeTimes->{{3.743164697225491*^9, 3.743164746873455*^9}, 
+   3.7431651024800124`*^9},ExpressionUUID->"ca34192f-7a22-43dd-a38e-\
+e8cf46da656e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"$MealTrackerHistoryDatabin", "=", 
+  RowBox[{"CreateDatabin", "[", 
+   RowBox[{
+   "\"\<Name\>\"", "\[Rule]", "\"\<History Databin for Meal Tracker\>\""}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.743164748008569*^9, 3.7431647670794754`*^9}},
+ CellLabel->"In[30]:=",ExpressionUUID->"be088069-49c5-4852-8f1d-1bb93513b670"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox["Databin",
+    "SummaryHead"], "[", 
+   DynamicModuleBox[{Typeset`open$$ = False, Typeset`embedState$$ = "Ready"}, 
+    TemplateBox[{PaneSelectorBox[{False -> GridBox[{{
+            PaneBox[
+             ButtonBox[
+              DynamicBox[
+               FEPrivate`FrontEndResource[
+               "FEBitmaps", "SquarePlusIconMedium"]], 
+              ButtonFunction :> (Typeset`open$$ = True), Appearance -> None, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             Alignment -> {Center, Center}, ImageSize -> 
+             Dynamic[{
+               Automatic, 3.5 CurrentValue["FontCapHeight"]/
+                AbsoluteCurrentValue[Magnification]}]], 
+            GraphicsBox[{
+              Thickness[0.05555555555555555], 
+              StyleBox[{
+                
+                FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 
+                  0}}, {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}, {{0, 2, 
+                  0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                  0}, {0, 1, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 0}, {0, 1, 
+                  0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 0}, {1, 3, 3}, {0, 1, 
+                  0}, {0, 1, 0}, {1, 3, 3}, {0, 1, 0}, {1, 3, 3}, {0, 1, 0}, {
+                  1, 3, 3}}}, {{{15.646999999999998`, 5.933000000000001}, {
+                  13.585, 7.263}, {15.533, 8.458}, {17.332, 
+                  7.363999999999999}, {15.646999999999998`, 
+                  5.933000000000001}}, {{12.697, 3.425}, {10.245, 5.212}, {
+                  12.491, 6.591}, {14.725999999999999`, 
+                  5.1499999999999995`}, {12.697, 3.425}}, {{8.666, 0.}, {
+                  5.978000000000001, 2.285}, {8.666, 4.244}, {
+                  11.354000000000001`, 2.285}, {8.666, 0.}}, {{4.635, 
+                  3.425}, {2.606, 5.1499999999999995`}, {4.841, 6.591}, {
+                  7.087, 5.212}, {4.635, 3.425}}, {{0., 7.363999999999999}, {
+                  1.799, 8.458}, {3.7470000000000003`, 7.263}, {
+                  1.6840000000000002`, 5.933000000000001}, {0., 
+                  7.363999999999999}}, CompressedData["
+1:eJxTTMoPSmViYGAQBmIQrbtp7vvlbqIOP+uy9pQIqzr8Wfnxkm+SjIPIOveH
+VVNUHNgbpzp3v1Fw2Pb575WKk0YOpnG7PHmYFB1eB+6Qa+U2djDvdEx4OkHR
+AWTMMSA/PQ0Ilik61NgDVQLVF9hyXV9coOKwp2SyBMs0FYcFUvp3Vdg04PbJ
+twJNikPwV4Gsn6DhAFQdxrdWxWHWTCCI1HAAOSMnXcXB42GVyLrjig5nz4CA
+hEMWyOAWRQd+kEfUJaDmKzpoxvQf+qoh4RDQOz1P6LCCA5N2u9jNcxIOlltO
+lO2bLwI3TxJoja6RCNw+kO7GqSJw96CHDwDEr32g
+                  "]}]}, 
+               FaceForm[
+                RGBColor[0.44721600000000006`, 0.519288, 0.528528, 1.]], 
+               StripOnInput -> False]}, {
+             Background -> GrayLevel[0.93], Axes -> False, AspectRatio -> 1, 
+              ImageSize -> {Automatic, 
+                Dynamic[
+                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                  Magnification])]}, Frame -> True, FrameTicks -> None, 
+              PlotRangePadding -> 2.5, FrameStyle -> Directive[
+                Thickness[Tiny], 
+                GrayLevel[0.55]], ImageSize -> {18., 19.}, 
+              PlotRange -> {{0., 18.}, {0., 19.}}, AspectRatio -> Automatic}], 
+            GridBox[{{
+               RowBox[{
+                 TagBox["\"Name: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                 "\"History Databin for Meal Tracker\"", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Entry count: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  DynamicBox[
+                   ToBoxes[
+                    Lookup[
+                    Replace[
+                    
+                    DataDropClient`Private`datadropclientcache[{
+                    "DatabinStats", 
+                    "DD6a53d8f96cf-a529-4c87-9e7e-2594cc28c827"}], Except[
+                    Blank[Association]] -> {}, {0}], "EntryCount", 
+                    Missing[]], StandardForm]], "SummaryItem"]}]}}, 
+             GridBoxAlignment -> {
+              "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+             False, GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+              BaseStyle -> {
+              ShowStringCharacters -> False, NumberMarks -> False, 
+               PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+          GridBoxAlignment -> {"Rows" -> {{Top}}}, AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          BaselinePosition -> {1, 1}], True -> GridBox[{{
+            PaneBox[
+             ButtonBox[
+              DynamicBox[
+               FEPrivate`FrontEndResource[
+               "FEBitmaps", "SquareMinusIconMedium"]], 
+              ButtonFunction :> (Typeset`open$$ = False), Appearance -> None, 
+              Evaluator -> Automatic, Method -> "Preemptive"], 
+             Alignment -> {Center, Center}, ImageSize -> 
+             Dynamic[{
+               Automatic, 3.5 CurrentValue["FontCapHeight"]/
+                AbsoluteCurrentValue[Magnification]}]], 
+            GraphicsBox[{
+              Thickness[0.05555555555555555], 
+              StyleBox[{
+                
+                FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 
+                  0}}, {{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}, {{0, 2, 
+                  0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                  0}, {0, 1, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 0}, {0, 1, 
+                  0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 0}, {1, 3, 3}, {0, 1, 
+                  0}, {0, 1, 0}, {1, 3, 3}, {0, 1, 0}, {1, 3, 3}, {0, 1, 0}, {
+                  1, 3, 3}}}, {{{15.646999999999998`, 5.933000000000001}, {
+                  13.585, 7.263}, {15.533, 8.458}, {17.332, 
+                  7.363999999999999}, {15.646999999999998`, 
+                  5.933000000000001}}, {{12.697, 3.425}, {10.245, 5.212}, {
+                  12.491, 6.591}, {14.725999999999999`, 
+                  5.1499999999999995`}, {12.697, 3.425}}, {{8.666, 0.}, {
+                  5.978000000000001, 2.285}, {8.666, 4.244}, {
+                  11.354000000000001`, 2.285}, {8.666, 0.}}, {{4.635, 
+                  3.425}, {2.606, 5.1499999999999995`}, {4.841, 6.591}, {
+                  7.087, 5.212}, {4.635, 3.425}}, {{0., 7.363999999999999}, {
+                  1.799, 8.458}, {3.7470000000000003`, 7.263}, {
+                  1.6840000000000002`, 5.933000000000001}, {0., 
+                  7.363999999999999}}, CompressedData["
+1:eJxTTMoPSmViYGAQBmIQrbtp7vvlbqIOP+uy9pQIqzr8Wfnxkm+SjIPIOveH
+VVNUHNgbpzp3v1Fw2Pb575WKk0YOpnG7PHmYFB1eB+6Qa+U2djDvdEx4OkHR
+AWTMMSA/PQ0Ilik61NgDVQLVF9hyXV9coOKwp2SyBMs0FYcFUvp3Vdg04PbJ
+twJNikPwV4Gsn6DhAFQdxrdWxWHWTCCI1HAAOSMnXcXB42GVyLrjig5nz4CA
+hEMWyOAWRQd+kEfUJaDmKzpoxvQf+qoh4RDQOz1P6LCCA5N2u9jNcxIOlltO
+lO2bLwI3TxJoja6RCNw+kO7GqSJw96CHDwDEr32g
+                  "]}]}, 
+               FaceForm[
+                RGBColor[0.44721600000000006`, 0.519288, 0.528528, 1.]], 
+               StripOnInput -> False]}, {
+             Background -> GrayLevel[0.93], Axes -> False, AspectRatio -> 1, 
+              ImageSize -> {Automatic, 
+                Dynamic[
+                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                  Magnification])]}, Frame -> True, FrameTicks -> None, 
+              PlotRangePadding -> 2.5, FrameStyle -> Directive[
+                Thickness[Tiny], 
+                GrayLevel[0.55]], ImageSize -> {18., 19.}, 
+              PlotRange -> {{0., 18.}, {0., 19.}}, AspectRatio -> Automatic}], 
+            GridBox[{{
+               RowBox[{
+                 TagBox["\"Name: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                 "\"History Databin for Meal Tracker\"", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Entry count: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  DynamicBox[
+                   ToBoxes[
+                    Lookup[
+                    Replace[
+                    
+                    DataDropClient`Private`datadropclientcache[{
+                    "DatabinStats", 
+                    "DD6a53d8f96cf-a529-4c87-9e7e-2594cc28c827"}], Except[
+                    Blank[Association]] -> {}, {0}], "EntryCount", 
+                    Missing[]], StandardForm]], "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Short ID: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["\"wQdkH4WA\"", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"UUID: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                 "\"DD6a53d8f96cf-a529-4c87-9e7e-2594cc28c827\"", 
+                  "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"ShortURL: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  
+                  TemplateBox[{
+                   "\"https://wolfr.am/wQdkH4WA\"", 
+                    "https://wolfr.am/wQdkH4WA"}, "HyperlinkURL"], 
+                  "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Short ID: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["\"wQdkH4WA\"", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"UUID: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                 "\"DD6a53d8f96cf-a529-4c87-9e7e-2594cc28c827\"", 
+                  "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"ShortURL: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  
+                  TemplateBox[{
+                   "\"https://wolfr.am/wQdkH4WA\"", 
+                    "https://wolfr.am/wQdkH4WA"}, "HyperlinkURL"], 
+                  "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Creator: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["\"andrews@wolfram.com\"", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Owner: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["\"andrews@wolfram.com\"", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Creation date: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["\"Mon 13 Aug 2018 10:59:40\"", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Latest date: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  DynamicBox[
+                   ToBoxes[
+                    Replace[
+                    Lookup[
+                    Replace[
+                    
+                    DataDropClient`Private`datadropclientcache[{
+                    "DatabinLatest", 
+                    "DD6a53d8f96cf-a529-4c87-9e7e-2594cc28c827"}], Except[
+                    Blank[Association]] -> {}, {0}], "Timestamp", 
+                    Missing[]], Pattern[DataDropClient`Private`date, 
+                    Blank[DateObject]] :> 
+                    DateString[DataDropClient`Private`date], {0}], 
+                    StandardForm]], "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Size: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  DynamicBox[
+                   ToBoxes[
+                    (If[
+                    NumberQ[#], 
+                    Round[#, 0.1], #]& )[
+                    Lookup[
+                    Replace[
+                    
+                    DataDropClient`Private`datadropclientcache[{
+                    "DatabinStats", 
+                    "DD6a53d8f96cf-a529-4c87-9e7e-2594cc28c827"}], Except[
+                    Blank[Association]] -> {}, {0}], "Size", 
+                    Missing[]]], StandardForm]], "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Latest: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  DynamicBox[
+                   ToBoxes[
+                    Lookup[
+                    Replace[
+                    
+                    DataDropClient`Private`datadropclientcache[{
+                    "DatabinLatest", 
+                    "DD6a53d8f96cf-a529-4c87-9e7e-2594cc28c827"}], Except[
+                    Blank[Association]] -> {}, {0}], "Data", 
+                    Missing[]], StandardForm]], "SummaryItem"]}]}}, 
+             GridBoxAlignment -> {
+              "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+             False, GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+              BaseStyle -> {
+              ShowStringCharacters -> False, NumberMarks -> False, 
+               PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+          GridBoxAlignment -> {"Rows" -> {{Top}}}, AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          BaselinePosition -> {1, 1}]}, 
+       Dynamic[Typeset`open$$], ImageSize -> Automatic]},
+     "SummaryPanel"],
+    DynamicModuleValues:>{}], "]"}],
+  Databin["wQdkH4WA"],
+  Editable->False,
+  SelectWithContents->True,
+  Selectable->False]], "Output",
+ CellChangeTimes->{{3.7431647728080482`*^9, 3.7431647807708445`*^9}},
+ CellLabel->"Out[30]=",ExpressionUUID->"347de690-2d88-4d12-b26f-6bbd74de77ac"]
+}, Open  ]],
+
+Cell["\<\
+If you have an existing Databin you want to use, you can use it  like this \
+(uncomment and change as needed):\
+\>", "Text",
+ CellChangeTimes->{{3.743165110348799*^9, 
+  3.743165178235587*^9}},ExpressionUUID->"32f58cb9-9022-4feb-9e3c-\
+05660d52c494"],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{"$MealTrackerHistoryDatabin", "=", 
+   RowBox[{"Databin", "[", "\"\<YourDatabinIDGoesHere\>\"", "]"}]}], 
+  "*)"}]], "Input",
+ CellChangeTimes->{{3.743165043687134*^9, 3.743165088388603*^9}, {
+  3.743165121923957*^9, 
+  3.743165122228987*^9}},ExpressionUUID->"c8c6079e-827c-46f1-b9ef-\
+5a3aac796362"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Deploy the meal tracker", "Subsection",
+ CellChangeTimes->{{3.7431646152668676`*^9, 
+  3.7431646211210384`*^9}},ExpressionUUID->"4d55f98b-0a48-4037-a0bb-\
+f3d50e4370f9"],
+
+Cell["\<\
+This will deploy the meal tracker to the specified cloud directory, returning \
+a list of CloudObjects for the various pages that were deployed.
+Clicking on them will open your browser to the selected page.\
+\>", "Text",
+ CellChangeTimes->{{3.7431648315539227`*^9, 3.7431649022259893`*^9}, {
+  3.7431651916409273`*^9, 
+  3.7431652605698195`*^9}},ExpressionUUID->"402d2442-e08e-4fc3-904d-\
+0aef9efc9d4f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DeployMealTrackerApp", "[", 
+  RowBox[{"$MealTrackerCloudObject", ",", 
+   RowBox[{
+   "\"\<HistoryDatabin\>\"", "\[Rule]", "$MealTrackerHistoryDatabin"}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.7431648181325808`*^9, 3.7431648257623434`*^9}, {
+  3.7431649826670322`*^9, 3.7431649833451*^9}},
+ CellLabel->"In[37]:=",ExpressionUUID->"e1d8add5-06cc-438a-9ee7-7fa74179077a"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/Home\
+\"","https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/Home"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/Home"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+FoodEntry\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+FoodEntry"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+FoodEntry"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+MealEntry\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+MealEntry"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+MealEntry"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ServingSizeEntry\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ServingSizeEntry"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ServingSizeEntry"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+NutritionEntry\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+NutritionEntry"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+NutritionEntry"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ViewFood\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ViewFood"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ViewFood"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ViewMeal\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ViewMeal"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ViewMeal"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ChooseMeal\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ChooseMeal"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ChooseMeal"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ChooseFood\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ChooseFood"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ChooseFood"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ViewHistory\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ViewHistory"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ViewHistory"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+RemoveLogEntry\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+RemoveLogEntry"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+RemoveLogEntry"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+FoodSearch\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+FoodSearch"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+FoodSearch"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+FoodLookup\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+FoodLookup"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+FoodLookup"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+RemoveEntity\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+RemoveEntity"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+RemoveEntity"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ServingSizeMultiplication\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ServingSizeMultiplication"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ServingSizeMultiplication"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+Settings\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+Settings"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+Settings"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+Reminders\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+Reminders"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+Reminders"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ScanBarcode\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ScanBarcode"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+ScanBarcode"],
+    SelectWithContents->True], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+Suggestion\"",
+       "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+Suggestion"},
+      "HyperlinkURL"], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/\
+Suggestion"],
+    SelectWithContents->True]}], "}"}]], "Output",
+ CellChangeTimes->{3.7431652781885815`*^9},
+ CellLabel->"Out[37]=",ExpressionUUID->"56b6e3bc-76c0-4986-9915-9d3109c31c0b"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Go to the home page", "Subsection",
+ CellChangeTimes->{{3.743164909247691*^9, 
+  3.7431649113929057`*^9}},ExpressionUUID->"1369249a-c1ba-418f-bc4f-\
+9ce0e9904480"],
+
+Cell["\<\
+The first link in the above output should take you to the home page of the \
+newly deployed meal tracker application.
+Otherwise, it should be here:\
+\>", "Text",
+ CellChangeTimes->{{3.743164950720838*^9, 3.7431649636011257`*^9}, {
+  3.7431652883996024`*^9, 
+  3.7431653050982723`*^9}},ExpressionUUID->"6eb40f22-d452-451d-bc77-\
+962ebdd0d284"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"$MealTrackerHomePage", "=", 
+  RowBox[{"FileNameJoin", "[", 
+   RowBox[{"{", 
+    RowBox[{"$MealTrackerCloudObject", ",", "\"\<Home\>\""}], "}"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.743164915709337*^9, 3.743164946088375*^9}, {
+  3.743165306557418*^9, 3.743165323386101*^9}},
+ CellLabel->"In[38]:=",ExpressionUUID->"2ecf7f38-4658-4d95-849f-fc6976b029ec"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"CloudObject", "[", 
+   TemplateBox[{
+    "\"https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/Home\"\
+","https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/Home"},
+    "HyperlinkURL"], "]"}],
+  CloudObject[
+  "https://www.wolframcloud.com/objects/andrews/MealTracker/Andrew/Home"],
+  SelectWithContents->True]], "Output",
+ CellChangeTimes->{{3.743164928309597*^9, 3.7431649655853243`*^9}, 
+   3.7431653238721495`*^9},
+ CellLabel->"Out[38]=",ExpressionUUID->"58156563-0d65-448d-9bd3-3efc5e35b81b"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Easy access to the home page", "Subsection",
+ CellChangeTimes->{{3.7431653271144733`*^9, 
+  3.743165333022064*^9}},ExpressionUUID->"7f34dd2f-d993-47d2-811f-\
+b43500bcfe58"],
+
+Cell["The full URL can be found here:", "Text",
+ CellChangeTimes->{{3.743165348447607*^9, 
+  3.743165352307993*^9}},ExpressionUUID->"dc373ac2-7324-436b-8bb6-\
+dc92fcac66c9"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"First", "@", "$MealTrackerHomePage"}]], "Input",
+ CellChangeTimes->{{3.743165340139776*^9, 3.7431653455013123`*^9}},
+ CellLabel->"In[39]:=",ExpressionUUID->"fd7966d1-c007-47e3-9c50-f156d8425d72"],
+
+Cell[BoxData["\<\"https://www.wolframcloud.com/objects/andrews/MealTracker/\
+Andrew/Home\"\>"], "Output",
+ CellChangeTimes->{3.7431653459053526`*^9},
+ CellLabel->"Out[39]=",ExpressionUUID->"f6c6df64-bfca-445b-9ca6-00458b5a576f"]
+}, Open  ]],
+
+Cell["A shortened URL can be created with URLShorten:", "Text",
+ CellChangeTimes->{{3.7431653549782596`*^9, 
+  3.743165371284156*^9}},ExpressionUUID->"e105f598-d47c-4db5-8c38-\
+d36df9944d99"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"URLShorten", "[", 
+  RowBox[{"First", "@", "$MealTrackerHomePage"}], "]"}]], "Input",
+ CellChangeTimes->{{3.743165377175156*^9, 3.7431653801631565`*^9}},
+ CellLabel->"In[40]:=",ExpressionUUID->"e477925a-7be7-403b-bde3-8d3eb4a23c00"],
+
+Cell[BoxData["\<\"https://wolfr.am/wQdZubEd\"\>"], "Output",
+ CellChangeTimes->{3.7431653832831564`*^9},
+ CellLabel->"Out[40]=",ExpressionUUID->"8e93d05f-4fc6-4f4b-964b-0c5443ed89e1"]
+}, Open  ]],
+
+Cell["\<\
+A QR code can be created for easy access via a smartphone camera:\
+\>", "Text",
+ CellChangeTimes->{{3.743165386084156*^9, 
+  3.7431653984651566`*^9}},ExpressionUUID->"7632d978-e38f-4fc4-8249-\
+6cde97b42ef7"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"BarcodeImage", "[", 
+  RowBox[{
+   RowBox[{"First", "@", "$MealTrackerHomePage"}], ",", "\"\<QR\>\""}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.743165409668156*^9, 3.743165415610156*^9}},
+ CellLabel->"In[41]:=",ExpressionUUID->"03a7e7d5-4ee4-4fc4-ae23-ee95146c2521"],
+
+Cell[BoxData[
+ GraphicsBox[
+  TagBox[RasterBox[CompressedData["
+1:eJztkk1KA0EUhEdXLr2Ct3Dr0m3EAyQ4BjcREkHce3AjKDRFVfWMP+keqAdJ
+/9Wr+h7M1eZ59Xg+DMPh4vi3Wr/e7Pfrt7vL4+F+d3ja7saH293LuB3315tP
+2fvXz9XZsb7XspgO37G3EhWGjhjQY4qPYsJ+dcbeMPTFgD5477wGUmoWlhOG
+5THUdCqT3YdhuQxKhz2oZx5hWA4DlupR7+oO9SwnDH0xqELf364/qTCcloF9
+J+7bcd+T0v1VheH/GbBHfStlRs0LmZgHqzC0Z3D+Kg972RxudVlhaMuAHmzF
+DMXBWJlXbY4wtGMoNWyvtE43Ra94w9CWQZ3n9LJVceEdzhiG9gwsD7OUh+JD
+7Rz/MLRjUIX6YUK5fOUVhv4YyjN7c3v0U2zKJwz9Migf1DIG1afWubOE4bQM
+jAUzsJdluVzFEYb+GPDe9bl8pallhqFPBvam2HDvys0bhr4YWJX+7o5pWI67
+D0M/DKUv6mocrMfNUZshDO0ZSv0UT8ej9syTZYShXwaWMYWr7FPvqsLQnqGW
+i77sTs3hys0YhnYMtVJ69Kv1K84w9MWAd1O8lQdjdmsY+mRQOaidMw/q1TkM
+fTJgv8twczAfVqgPwzIYVB7zw3e1KqYwLIPB6Rkj9ip/xxeGtgzMi2mZp5tH
++bOsMPTBoAp9FfNUBubh8sNweoYPY5gvsw==
+    "], {{0, 132}, {132, 0}}, {0, 1},
+    ColorFunction->GrayLevel],
+   BoxForm`ImageTag["Bit", ColorSpace -> Automatic, Interleaving -> None],
+   Selectable->False],
+  DefaultBaseStyle->"ImageGraphics",
+  ImageSizeRaw->{132, 132},
+  PlotRange->{{0, 132}, {0, 132}}]], "Output",
+ CellChangeTimes->{3.7431654168631563`*^9},
+ CellLabel->"Out[41]=",ExpressionUUID->"91a56ccd-7415-4e01-83ed-4d05eac597cb"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{944, 982},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+FrontEndVersion->"11.3 for Microsoft Windows (64-bit) (March 6, 2018)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 163, 3, 96, "Title",ExpressionUUID->"1137940b-d09b-4149-9ced-3c90b363bf3d"],
+Cell[746, 27, 342, 7, 56, "Text",ExpressionUUID->"73399ff3-4ea8-4452-8917-a348b633421e"],
+Cell[CellGroupData[{
+Cell[1113, 38, 229, 4, 67, "Section",ExpressionUUID->"e6106bc6-0776-483b-84eb-d1c27a87309d"],
+Cell[1345, 44, 405, 8, 48, "Input",ExpressionUUID->"76059c1c-d18c-4223-96b8-3c8183441864"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1787, 57, 174, 3, 67, "Section",ExpressionUUID->"cd666b1a-76a9-4ef8-949f-636ba7add652"],
+Cell[1964, 62, 444, 10, 56, "Text",ExpressionUUID->"5a5c8856-226a-4d59-a30e-e49cd9405605"],
+Cell[CellGroupData[{
+Cell[2433, 76, 307, 5, 28, "Input",ExpressionUUID->"f9661fc4-df56-4cdc-a3ec-7f519cb09fb2"],
+Cell[2743, 83, 524, 11, 35, "Output",ExpressionUUID->"2f807673-0f52-4b1a-b891-ed4576e8147a"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3316, 100, 269, 4, 67, "Section",ExpressionUUID->"73775202-7353-4e13-8996-1c57c8cacf73"],
+Cell[3588, 106, 379, 8, 34, "Text",ExpressionUUID->"3cb843b4-dcef-40c3-8f00-3244a17277dd"],
+Cell[CellGroupData[{
+Cell[3992, 118, 186, 3, 53, "Subsection",ExpressionUUID->"ce813c7f-3bb7-46c9-b8b2-c634bd6bbca5"],
+Cell[4181, 123, 290, 6, 56, "Text",ExpressionUUID->"ca34192f-7a22-43dd-a38e-e8cf46da656e"],
+Cell[CellGroupData[{
+Cell[4496, 133, 349, 7, 28, "Input",ExpressionUUID->"be088069-49c5-4852-8f1d-1bb93513b670"],
+Cell[4848, 142, 14066, 284, 71, "Output",ExpressionUUID->"347de690-2d88-4d12-b26f-6bbd74de77ac"]
+}, Open  ]],
+Cell[18929, 429, 260, 6, 34, "Text",ExpressionUUID->"32f58cb9-9022-4feb-9e3c-05660d52c494"],
+Cell[19192, 437, 340, 8, 28, "Input",ExpressionUUID->"c8c6079e-827c-46f1-b9ef-5a3aac796362"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19569, 450, 175, 3, 53, "Subsection",ExpressionUUID->"4d55f98b-0a48-4037-a0bb-f3d50e4370f9"],
+Cell[19747, 455, 413, 8, 78, "Text",ExpressionUUID->"402d2442-e08e-4fc3-904d-0aef9efc9d4f"],
+Cell[CellGroupData[{
+Cell[20185, 467, 399, 8, 31, "Input",ExpressionUUID->"e1d8add5-06cc-438a-9ee7-7fa74179077a"],
+Cell[20587, 477, 8217, 229, 431, "Output",ExpressionUUID->"56b6e3bc-76c0-4986-9915-9d3109c31c0b"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28853, 712, 169, 3, 53, "Subsection",ExpressionUUID->"1369249a-c1ba-418f-bc4f-9ce0e9904480"],
+Cell[29025, 717, 352, 8, 56, "Text",ExpressionUUID->"6eb40f22-d452-451d-bc77-962ebdd0d284"],
+Cell[CellGroupData[{
+Cell[29402, 729, 387, 8, 31, "Input",ExpressionUUID->"2ecf7f38-4658-4d95-849f-fc6976b029ec"],
+Cell[29792, 739, 568, 12, 35, "Output",ExpressionUUID->"58156563-0d65-448d-9bd3-3efc5e35b81b"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[30409, 757, 178, 3, 53, "Subsection",ExpressionUUID->"7f34dd2f-d993-47d2-811f-b43500bcfe58"],
+Cell[30590, 762, 173, 3, 34, "Text",ExpressionUUID->"dc373ac2-7324-436b-8bb6-dc92fcac66c9"],
+Cell[CellGroupData[{
+Cell[30788, 769, 219, 3, 28, "Input",ExpressionUUID->"fd7966d1-c007-47e3-9c50-f156d8425d72"],
+Cell[31010, 774, 228, 3, 32, "Output",ExpressionUUID->"f6c6df64-bfca-445b-9ca6-00458b5a576f"]
+}, Open  ]],
+Cell[31253, 780, 191, 3, 34, "Text",ExpressionUUID->"e105f598-d47c-4db5-8c38-d36df9944d99"],
+Cell[CellGroupData[{
+Cell[31469, 787, 256, 4, 31, "Input",ExpressionUUID->"e477925a-7be7-403b-bde3-8d3eb4a23c00"],
+Cell[31728, 793, 183, 2, 32, "Output",ExpressionUUID->"8e93d05f-4fc6-4f4b-964b-0c5443ed89e1"]
+}, Open  ]],
+Cell[31926, 798, 217, 5, 34, "Text",ExpressionUUID->"7632d978-e38f-4fc4-8249-6cde97b42ef7"],
+Cell[CellGroupData[{
+Cell[32168, 807, 292, 6, 31, "Input",ExpressionUUID->"03a7e7d5-4ee4-4fc4-ae23-ee95146c2521"],
+Cell[32463, 815, 1175, 23, 149, "Output",ExpressionUUID->"91a56ccd-7415-4e01-83ed-4d05eac597cb"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
