@@ -13,9 +13,21 @@ An open-source meal tracker made in [Wolfram Language](https://www.wolfram.com/l
 * A Wolfram Engine product (e.g. [Wolfram|One](http://www.wolfram.com/wolfram-one/) or [Mathematica](http://www.wolfram.com/mathematica/))
 * A [Wolfram ID](https://account.wolfram.com/auth/create) and account for the [Wolfram Cloud](https://www.wolfram.com/cloud/)
 
-## Deployment
-Deployment to the cloud can be done with some simple code (edit the `CloudObject` path as needed):
+## Initial Setup
+Deployment to the cloud can be done with some simple code (edit the `CloudObject` path and `Databin` for your needs):
 ```Mathematica
 Get["MealTrackerApp.wl"]
-DeployMealTrackerApp[CloudObject["YourMealTrackerPath"], "DefaultDirectory" -> Automatic]
+DeployMealTrackerApp[CloudObject["MealTracker/YourNameHere"], "HistoryDatabin" -> Databin["YourDatabinIDGoesHere"]]
 ```
+
+Check out the [deployment notebook](https://github.com/drewsteinacher/Meal-Tracker/blob/master/Setup.nb) for more information.
+
+## Custom Data Analysis
+Have a look at the example [custom data analysis notebook](https://github.com/drewsteinacher/Meal-Tracker/blob/master/DataAnalysis.nb) for ideas and useful code.
+
+## Development, Questions and How to Contribute
+Feel free to fork this repo and/or make issues and pull requests!
+
+The [development notebook](https://github.com/drewsteinacher/Meal-Tracker/blob/master/Develop.nb) has information and code examples for
+* Running the test suites (deployment, specific sub packages, etc...)
+* Redeploying updated code and `EntityStore`s
