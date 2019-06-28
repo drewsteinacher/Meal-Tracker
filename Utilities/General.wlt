@@ -104,7 +104,7 @@ VerificationTest[
 ];
 
 VerificationTest[
-	TimestampString[DateObject[{2018, 3, 20, 14, 22, 16.0803520}, "Instant", "Gregorian", -5.]],
+	TimestampString[DateObject[{2018, 3, 20, 14, 22, 16.0803520}, "Instant", "Gregorian", $TimeZone]],
 	"2018-03-20 14:22:16",
 	TestID -> "TimestampString-basic"
 ];
@@ -165,8 +165,8 @@ VerificationTest[
 
 
 VerificationTest[
-	SafeInterpreter["ComputedDateTime"] @ TimestampString[DateObject[{2018, 3, 20, 14, 22, 16.0803520}, "Instant", "Gregorian", -5.]],
-	DateObject[{2018, 3, 20, 14, 22, 16}, "Instant", "Gregorian", -5.],
+	SafeInterpreter["ComputedDateTime"] @ TimestampString[DateObject[{2018, 3, 20, 14, 22, 16.0803520}, "Instant", "Gregorian", $TimeZone]],
+	DateObject[{2018, 3, 20, 14, 22, 16}, "Instant", "Gregorian", $TimeZone],
 	TestID -> "FromCamelCase-Interpreter-support"
 ];
 
@@ -191,20 +191,20 @@ VerificationTest[
 ];
 
 VerificationTest[
-	Normal @ TimeSeriesAccumulate[es = EventSeries[{{DateObject[{2018, 4, 5, 8, 30, 0.}, "Instant", "Gregorian", -5.], Quantity[57.965, "LargeCalories"]}, {DateObject[{2018, 4, 5, 9, 0, 0.}, "Instant", "Gregorian", -5.], Quantity[15.93, "LargeCalories"]}}]],
-	{{DateObject[{2018, 4, 5, 6, 30, 0.}, "Instant", "Gregorian", -5.], Quantity[0, "LargeCalories"]}, {DateObject[{2018, 4, 5, 8, 30, 0.}, "Instant", "Gregorian", -5.], Quantity[57.965, "LargeCalories"]}, {DateObject[{2018, 4, 5, 9, 0, 0.}, "Instant", "Gregorian", -5.], Quantity[73.895, "LargeCalories"]}},
+	Normal @ TimeSeriesAccumulate[es = EventSeries[{{DateObject[{2018, 4, 5, 8, 30, 0.}, "Instant", "Gregorian", $TimeZone], Quantity[57.965, "LargeCalories"]}, {DateObject[{2018, 4, 5, 9, 0, 0.}, "Instant", "Gregorian", $TimeZone], Quantity[15.93, "LargeCalories"]}}]],
+	{{DateObject[{2018, 4, 5, 6, 30, 0.}, "Instant", "Gregorian", $TimeZone], Quantity[0, "LargeCalories"]}, {DateObject[{2018, 4, 5, 8, 30, 0.}, "Instant", "Gregorian", $TimeZone], Quantity[57.965, "LargeCalories"]}, {DateObject[{2018, 4, 5, 9, 0, 0.}, "Instant", "Gregorian", $TimeZone], Quantity[73.895, "LargeCalories"]}},
 	TestID -> "TimeSeriesAccumulate-default-argument"
 ];
 
 VerificationTest[
 	Normal @ TimeSeriesAccumulate[es, Quantity[5, "Hours"]],
-	{{DateObject[{2018, 4, 5, 3, 30, 0.}, "Instant", "Gregorian", -5.], Quantity[0, "LargeCalories"]}, {DateObject[{2018, 4, 5, 8, 30, 0.}, "Instant", "Gregorian", -5.], Quantity[57.965, "LargeCalories"]}, {DateObject[{2018, 4, 5, 9, 0, 0.}, "Instant", "Gregorian", -5.], Quantity[73.895, "LargeCalories"]}},
+	{{DateObject[{2018, 4, 5, 3, 30, 0.}, "Instant", "Gregorian", $TimeZone], Quantity[0, "LargeCalories"]}, {DateObject[{2018, 4, 5, 8, 30, 0.}, "Instant", "Gregorian", $TimeZone], Quantity[57.965, "LargeCalories"]}, {DateObject[{2018, 4, 5, 9, 0, 0.}, "Instant", "Gregorian", $TimeZone], Quantity[73.895, "LargeCalories"]}},
 	TestID -> "TimeSeriesAccumulate-Quantity"
 ];
 
 VerificationTest[
 	Normal @ TimeSeriesAccumulate[es, es["FirstDate"] - Quantity[1, "Hours"]],
-	{{DateObject[{2018, 4, 5, 7, 30, 0.}, "Instant", "Gregorian", -5.], Quantity[0, "LargeCalories"]}, {DateObject[{2018, 4, 5, 8, 30, 0.}, "Instant", "Gregorian", -5.], Quantity[57.965, "LargeCalories"]}, {DateObject[{2018, 4, 5, 9, 0, 0.}, "Instant", "Gregorian", -5.], Quantity[73.895, "LargeCalories"]}},
+	{{DateObject[{2018, 4, 5, 7, 30, 0.}, "Instant", "Gregorian", $TimeZone], Quantity[0, "LargeCalories"]}, {DateObject[{2018, 4, 5, 8, 30, 0.}, "Instant", "Gregorian", $TimeZone], Quantity[57.965, "LargeCalories"]}, {DateObject[{2018, 4, 5, 9, 0, 0.}, "Instant", "Gregorian", $TimeZone], Quantity[73.895, "LargeCalories"]}},
 	TestID -> "TimeSeriesAccumulate-DateObject"
 ];
 
