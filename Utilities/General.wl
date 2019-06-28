@@ -89,7 +89,8 @@ QuantityToString[q_Quantity] := StringReplace[
 		"grams" -> "g",
 		"tablespoons" -> "tbsp",
 		"teaspoons" -> "tsp"
-	}
+	},
+	IgnoreCase -> True
 ];
 QuantityToString[x: _Rational | _?NumberQ] := ToString[N[x]];
 QuantityToString[_] := " ";
