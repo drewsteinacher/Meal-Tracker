@@ -55,7 +55,8 @@ chooseFoodForm[root_CloudObject][defaults_Association] := Module[
 			"EditQ" -> <|
 				"Interpreter" -> "Boolean",
 				"Label" -> "Edit servings for this meal?",
-				"Help" -> "If unchecked, a single default serving of each selected food will be used."
+				"Help" -> "If unchecked, a single default serving of each selected food will be used.",
+				"Input" -> Lookup[defaults, "editQ", True]
 			|>
 		},
 		chooseFoodAction[root][Join[#, KeyTake[defaults, "mode"]]]&,

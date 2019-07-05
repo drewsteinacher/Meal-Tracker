@@ -66,7 +66,8 @@ chooseMealForm[root_CloudObject][defaults_Association] := Module[
 			|>,
 			"EditQ" -> <|
 				"Interpreter" -> "Boolean",
-				"Label" -> "Edit servings for this meal?"
+				"Label" -> "Edit servings for this meal?",
+				"Input" -> Lookup[defaults, "editQ", False]
 			|>
 		},
 		chooseMealAction[root][Join[#, KeyTake[defaults, $ParametersPassedToAction]]]&,
