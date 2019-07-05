@@ -409,6 +409,7 @@ VerificationTest[
 ];
 
 VerificationTest[
+	Pause[2];
 	LoadEntityStore[root, "MyFood"];
 	Sort @ EntityValue["MyFood", "CanonicalName"],
 	Sort @ {"Egg", "WhiteBread", "PeanutButter", "Jelly", "Milk", "Oats", "GreekYogurt", "FlaxSeed", "Honey", "VanillaExtract"},
@@ -432,6 +433,7 @@ VerificationTest[
 ];
 
 VerificationTest[
+	Pause[2];
 	LoadEntityStore[root, "MyFood"];
 	Sort @ EntityValue["MyFood", "CanonicalName"],
 	Sort @ {"Egg", "WhiteBread", "PeanutButter", "Jelly", "Milk", "Oats", "GreekYogurt", "FlaxSeed", "Honey", "VanillaExtract", "Bananas"},
@@ -462,6 +464,7 @@ VerificationTest[
 ];
 
 VerificationTest[
+	Pause[2];
 	LoadEntityStore[root, "MyFood"];
 	Sort @ EntityValue["MyFood", "CanonicalName"],
 	Sort @ {"Egg", "WhiteBread", "PeanutButter", "Jelly", "Milk", "Oats", "GreekYogurt", "FlaxSeed", "Honey", "VanillaExtract", "Bananas", "Salsa"},
@@ -469,6 +472,7 @@ VerificationTest[
 ];
 
 VerificationTest[
+	Pause[2];
 	LoadEntityStore[root, "MyFood"];
 	Normal @ Entity["MyFood", "Salsa"]["NutritionAssociation"],
 	{Rule[_String, Quantity[_?NumberQ, Except["Percent"]]]..},
@@ -515,10 +519,11 @@ VerificationTest[
 ];
 
 VerificationTest[
+	Pause[2];
 	LoadEntityStore[root, "MyFood"];
 	Entity["MyFood", "Oats"]["DateModified"],
 	Now,
-	SameTest -> Function[DateDifference[##] < Quantity[10, "Seconds"]],
+	SameTest -> Function[DateDifference[##] < Quantity[20, "Seconds"]],
 	TestID -> "NutritionEntry-update-DateModified"
 ];
 
@@ -746,12 +751,14 @@ VerificationTest[
 ];
 
 VerificationTest[
+	Pause[2];
 	Length @ Normal @ Databin[bin, Today] - mealLogCountBefore,
 	1,
 	TestID -> "Meal-log-counts-after-ChooseFood-simple-submit"
 ];
 
 VerificationTest[
+	Pause[2];
 	mealLogCountBefore = Length @ Normal @ Databin[bin, Today],
 	_Integer,
 	SameTest -> MatchQ,
@@ -773,6 +780,7 @@ VerificationTest[
 ];
 
 VerificationTest[
+	Pause[2];
 	Length @ Normal @ Databin[bin, Today] - mealLogCountBefore,
 	1,
 	TestID -> "Meal-log-counts-after-ChooseFood-edit-submit"
@@ -820,7 +828,7 @@ VerificationTest[
 ];
 
 VerificationTest[
-	Pause[1];
+	Pause[2];
 	LoadEntityStore[root, "MyFood"];
 	Sort @ EntityValue["MyFood", "CanonicalName"],
 	Sort @ {"Egg", "WhiteBread", "Jelly", "Milk", "Oats", "GreekYogurt", "FlaxSeed", "Honey", "VanillaExtract", "Bananas", "Salsa", "Apples,Raw,GrannySmith,WithSkin"},
