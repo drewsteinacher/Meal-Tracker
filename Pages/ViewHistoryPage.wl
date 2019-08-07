@@ -41,8 +41,8 @@ viewHistoryForm[root_CloudObject] := Module[
 				"Control" -> SetterBar,
 				"AutoSubmitting" -> True
 			|>,
-			{"StartDate", "Start"} -> DateInterpreterSpec[DateObject[Today, TimeObject[{4, 0}]]],
-			{"EndDate", "End"} -> DateInterpreterSpec[DateObject[Today, TimeObject[{23, 0}]]]
+			{"StartDate", "Start"} :> With[{date = DateObject[Today, TimeObject[{4, 0}]]}, DateInterpreterSpec[date]],
+			{"EndDate", "End"} :> With[{date = DateObject[Today, TimeObject[{23, 0}]]}, DateInterpreterSpec[date]]
 		},
 		viewHistoryAction[root],
 		AppearanceRules -> <|

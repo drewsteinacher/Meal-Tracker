@@ -58,7 +58,7 @@ chooseMealForm[root_CloudObject][defaults_Association] := Module[
 				"Help" -> AddMealHelpLinks[root],
 				"Input" -> Replace[Lookup[defaults, "meal", None], s_String :> Entity["MyMeal", s]]
 			|>,
-			"Timestamp" :> DateInterpreterSpec[Now, "AutoSubmitting" -> {}],
+			"Timestamp" :> DateInterpreterSpec["AutoSubmitting" -> {}],
 			"MealType" -> <|
 				"Interpreter" -> $MealTypes,
 				"Control" -> SetterBar,

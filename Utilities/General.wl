@@ -375,7 +375,8 @@ iTimeSeriesAccumulate[___] := $Failed;
 Options[DateInterpreterSpec] = {
 	"AutoSubmitting" -> {"Hour"}
 };
-DateInterpreterSpec[date : _DateObject : Now, OptionsPattern[]] := With[
+DateInterpreterSpec[opts: OptionsPattern[]] := DateInterpreterSpec[Now, opts];
+DateInterpreterSpec[date_DateObject, OptionsPattern[]] := With[
 	{
 		autoSubmittingFields = Replace[
 			OptionValue["AutoSubmitting"],
@@ -383,48 +384,52 @@ DateInterpreterSpec[date : _DateObject : Now, OptionsPattern[]] := With[
 				s_String :> {s},
 				Except[_List] -> {}
 			}
+		],
+		yearToString = AssociationMap[
+			ToString[#, InputForm]&,
+			DateValue["Year"] + {-1, 0, 1}
+		],
+		monthToString = AssociationMap[
+			DateString[DateObject[{DateValue["Year"], #}], "MonthNameShort"]&,
+			Range[1, 12]
+		],
+		dayToString = AssociationMap[IntegerToOrdinalString, Range[1, 31]],
+		hourToString = AssociationMap[
+			StringTemplate["`` ``"][Replace[Mod[#, 12], 0 -> 12], If[# > 11, "PM", "AM"]]&,
+			RotateLeft @ Range[0, 23]
 		]
 	},
 	CompoundElement[
 		{
 			"Year" -> <|
-				"Interpreter" :> yearInterpreterSpec,
-				"Input" :> DateValue[date, "Year"],
-				"Default" :> DateValue[date, "Year"],
+				"Interpreter" -> Normal @ AssociationMap[Reverse, yearToString],
+				"Input" -> yearToString[DateValue[date, "Year"]],
+				"Default" -> yearToString[DateValue[date, "Year"]],
 				"AutoSubmitting" -> MemberQ[autoSubmittingFields, "Year"]
 			|>,
 			"Month" -> <|
-				"Interpreter" :> monthInterpreterSpec,
-				"Input" :> DateValue[date, "Month"],
-				"Default" :> DateValue[date, "Month"],
+				"Interpreter" -> Normal @ AssociationMap[Reverse, monthToString],
+				"Input" -> monthToString[DateValue[date, "Month"]],
+				"Default" -> monthToString[DateValue[date, "Month"]],
 				"AutoSubmitting" -> MemberQ[autoSubmittingFields, "Month"]
 			|>,
 			"Day" -> <|
-				"Interpreter" -> dayInterpreterSpec,
-				"Input" :> DateValue[date, "Day"],
-				"Default" :> DateValue[date, "Day"],
+				"Interpreter" -> Normal @ AssociationMap[Reverse, dayToString],
+				"Input" -> dayToString[DateValue[date, "Day"]],
+				"Default" -> dayToString[DateValue[date, "Day"]],
 				"AutoSubmitting" -> MemberQ[autoSubmittingFields, "Day"]
 			|>,
 			"Hour" -> <|
-				"Interpreter" -> HourInterpreterSpec,
+				"Interpreter" -> Normal @ AssociationMap[Reverse, hourToString],
 				"Control" -> PopupMenu,
-				"Input" :> DateValue[date, "Hour"],
-				"Default" :> DateValue[date, "Hour"],
+				"Input" -> hourToString[DateValue[date, "Hour"]],
+				"Default" -> hourToString[DateValue[date, "Hour"]],
 				"AutoSubmitting" -> MemberQ[autoSubmittingFields, "Hour"]
 			|>
 		}
 	]
 ];
 
-
-yearInterpreterSpec := Rule[ToString[#, InputForm], #] & /@ (DateValue["Year"] + {-1, 0, 1});
-
-monthInterpreterSpec = Map[
-	Rule[DateString[DateObject[{DateValue["Year"], #}], "MonthNameShort"], #] &,
-	Range[1, 12]
-];
-
-dayInterpreterSpec = Rule[IntegerToOrdinalString[#], #]& /@ Range[1, 31];
 IntegerToOrdinalString[n_Integer] := With[
 	{
 		suffix = Which[

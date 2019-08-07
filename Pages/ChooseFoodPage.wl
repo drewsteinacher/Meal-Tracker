@@ -43,9 +43,12 @@ chooseFoodForm[root_CloudObject][defaults_Association] := Module[
 				"Interpreter" -> AnySubset @ Normal @ Sort @ AssociationMap[Reverse, EntityValue["MyFood", "Label", "EntityAssociation"]],
 				"Control" -> TogglerBar,
 				"Help" -> AddFoodHelpLinks[root, "ChooseFoodPage"],
-				"Input" -> (Lookup[defaults, "food", {}] // Map[Replace[s_String :> Entity["MyFood", s]]])
+				"Input" -> (Lookup[defaults, "food", {}] // Replace[Except[_List] -> {}] // Map[Replace[s_String :> Entity["MyFood", s]]])
 			|>,
-			"Timestamp" :> DateInterpreterSpec[Now, "AutoSubmitting" -> {}],
+			"Timestamp" -> <|
+				"Interpreter" :> DateInterpreterSpec["AutoSubmitting" -> {}],
+				"Label" :> DateString[]
+			|>,
 			"MealType" -> <|
 				"Interpreter" -> $MealTypes,
 				"Control" -> SetterBar,
