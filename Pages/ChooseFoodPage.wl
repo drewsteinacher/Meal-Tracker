@@ -17,7 +17,6 @@ chooseFoodAPI[root_CloudObject] := APIFunction[
 	{
 		"mealType" -> "String" :> GetMealTypeFromTime[],
 		"editQ" -> "Boolean" -> True,
-		"servings" -> RepeatingElement["Number"] -> {},
 		"food" -> RepeatingElement["String"] -> "",
 		"mode" -> {"none", "test", "submit"} -> "none"
 	},
