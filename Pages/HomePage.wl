@@ -29,28 +29,28 @@ homePage[root_] := Module[
 				"URL" -> FileNameJoin[{root, "FoodLookup"}]
 			|>,
 			<|
-				"Title" -> "Add a new Food manually",
+				"Title" -> "Add a new food manually",
 				"Icon" -> Entity["Icon", "RetailLocation"],
 				"URL" -> FileNameJoin[{root, "FoodEntry"}]
 			|>,
 			<|
-				"Title" -> "Add a new Meal",
+				"Title" -> "Add a new meal",
 				"Icon" -> Entity["Icon", "GroceryStoreAndSupermarket"],
 				"URL" -> FileNameJoin[{root, "MealEntry"}]
 			|>,
 			
 			<|
-				"Title" -> "View Foods",
+				"Title" -> "View foods",
 				"Icon" -> Entity["Icon", "Store"],
 				"URL" -> FileNameJoin[{root, "ViewFood"}]
 			|>,
 			<|
-				"Title" -> "View Meals",
+				"Title" -> "View meals",
 				"Icon" -> Entity["Icon", "Library"],
 				"URL" -> FileNameJoin[{root, "ViewMeal"}]
 			|>,
 			<|
-				"Title" -> "View History",
+				"Title" -> "View history",
 				"Icon" -> Entity["Icon", "Watches"],
 				"URL" -> FileNameJoin[{root, "ViewHistory"}]
 			|>,
@@ -62,17 +62,17 @@ homePage[root_] := Module[
 			
 			
 			<|
-				"Title" -> "Log Breakfast",
+				"Title" -> "Log breakfast",
 				"Icon" -> RandomChoice[mealTypeToIconEntities["Breakfast"]],
 				"URL" -> URLBuild[FileNameJoin[{root, "ChooseMeal"}], {"mealType" -> "Breakfast"}]
 			|>,
 			<|
-				"Title" -> "Log Lunch",
+				"Title" -> "Log lunch",
 				"Icon" -> RandomChoice[mealTypeToIconEntities["Lunch"]],
 				"URL" -> URLBuild[FileNameJoin[{root, "ChooseMeal"}], {"mealType" -> "Lunch"}]
 			|>,
 			<|
-				"Title" -> "Log Dinner",
+				"Title" -> "Log dinner",
 				"Icon" -> RandomChoice[mealTypeToIconEntities["Dinner"]],
 				"URL" -> URLBuild[FileNameJoin[{root, "ChooseMeal"}], {"mealType" -> "Dinner"}]
 			|>,
@@ -94,7 +94,7 @@ homePage[root_] := Module[
 				"URL" -> FileNameJoin[{root, "Reminders"}]
 			|>,
 			<|
-				"Title" -> "Configure Settings",
+				"Title" -> "Configure settings",
 				"Icon" -> Entity["Icon", "Mechanic"],
 				"URL" -> FileNameJoin[{root, "Settings"}]
 			|>,
